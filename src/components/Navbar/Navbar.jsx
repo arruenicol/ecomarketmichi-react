@@ -46,13 +46,13 @@ export default function Navbar() {
           <li style={{ color: colors.text }}>Ropa</li>
         </Link>
         <Link
-          to={"/mujer"}
+          to={"/hogar"}
           style={{ color:colors.text, textDecoration:"none"}}
         >
           <li style={{ color: colors.text }}>Hogar</li>
         </Link>
         <Link
-         to={"/ninos"}
+         to={"/comida"}
           style={{ color:colors.text, textDecoration:"none"}}
          >
           <li style={{ color: colors.text }}>Comida</li>

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:8080/api",
-    Headers:{
+    baseURL: "https://ecomarket-992494024913.us-central1.run.app/api",
+    headers:{
         "Content-Type": "application/json"
     }
 });

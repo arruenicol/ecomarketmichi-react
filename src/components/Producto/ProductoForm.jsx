@@ -12,7 +12,6 @@ export default function ProductoForm(){
         categoriaDTO: "",
         cantidadDTO: "",
     });
-
     const [imagen, setImagen] = useState(null);
     const [error, setError] = useState("");
     const navigate = useNavigate();
@@ -22,43 +21,45 @@ export default function ProductoForm(){
     const handleChange = (e) => {
         const {name, value} = e.target;
         setProducto((previo) => ({...previo, [name]:value}))
-    }
+    };
 
     // Creación de métodos para manejar el campo del formulario que recibe la imagen y este la toma del evento 
     const handleImageChange = (e) => {
         setImagen(e.target.files[0])
-    }
+    };
 
-    // HANDLESUBMIT
     const handleSubmit = async(e) => { 
         e.preventDefault(); // Con este método prevenimos que se recargue la página (comportamiento por defecto de los formularios)
         setError("");
     
 
-        // Validamos antes de retomar elementos del formulario
-        if(!producto || !producto.precioDTO || !producto.categoriaDTO || !producto.cantidadDTO || !imagen) {
-            setError("Todos los campos deben completarse, incluyendo la imagen")
-            return; 
+    // Validamos antes de retomar elementos del formulario
+    if(!producto || !producto.precioDTO || !producto.categoriaDTO || !producto.cantidadDTO || !imagen) {
+        setError("Todos los campos deben completarse, incluyendo la imagen")
+        return; 
+    }
+
+    // PARSER PARA PREPARAR DATOS A ENVIAR AL SERVIDOR
+    try { 
+        const datosProducto = {
+            ...producto,
+            precio: parseFloat(producto.precioDTO),
+            cantidad: parseInt(producto.cantidadDTO),
+
         }
+        // Ahora ya enviamos los datos al backend con productoService()
+        await productoService.createProduct(datosProducto, imagen)
 
-        // PARSER PARA PREPARAR DATOS A ENVIAR AL SERVIDOR
-        try { 
-            const datosProducto = {
-                ...producto,
-                precio: parseInt(producto.precioDTO),
-                cantidad: parseFloat(producto.cantidadDTO),
-            }
-            // Ahora ya enviamos los datos al backend con productoService()
-            await productoService.createProduct(datosProducto, imagen)
-
-            navigate("/tienda")  // navigate sirve para redireccionar sin cargar toda la págiana. Si se crea un nuevo producto luego lleva hasta la página inicial en este caso.
-        
-        } catch(error) {
+        navigate("/tienda")  // navigate sirve para redireccionar sin cargar toda la págiana. Si se crea un nuevo producto luego lleva hasta la página inicial en este caso.
+       
+      } catch(error) {
         setError("Error al ingresar los datos del producto", error.message);
         console.log(error);
-        }
+     }
     };
      
+    
+
 
     return (
         <>
@@ -68,7 +69,7 @@ export default function ProductoForm(){
 
                         <form onSubmit = {handleSubmit}>
                             {/* Nombre del producto para enviar al backend */}
-                            <label> Nombre: </label>
+                            <label> Nombre del producto </label>
                             <input  type="text"
                                     name="nombreProductoDTO"
                                     value={producto.nombreProductoDTO}
@@ -76,15 +77,15 @@ export default function ProductoForm(){
                                     required
                             />
                             {/* Precio del producto para enviar al backend */}
-                            <label> Precio: </label>
+                            <label> Precio del producto </label>
                             <input  type="number"
-                                    name="precio"
+                                    name="precioDTO"
                                     value={producto.precioDTO}
                                     onChange={handleChange}
                                     required
                             />
                             {/* Cantidad del producto para enviar al backend */}
-                            <label> Cantidad:</label>
+                            <label> Cantidad disponible </label>
                             <input  type="number"
                                     name="cantidadDTO"
                                     value={producto.cantidadDTO}
@@ -92,8 +93,8 @@ export default function ProductoForm(){
                                     required
                             />
                             {/* Categoría del producto para enviar al backend */}
-                            <label> Categoría:</label>
-                            <select name="cantidad"
+                            <label> Categoría del producto </label>
+                            <select name="categoriaDTO"
                                     value={producto.categoriaDTO}
                                     onChange={handleChange}
                                     required
@@ -104,15 +105,13 @@ export default function ProductoForm(){
                             </select>
                            
                             {/* Imágen del producto para enviar al backend */}
-                            <label> Imágen: </label>
+                            <label> Imágen del producto </label>
                             <input  type="file"
-                                    accept="image/"
+                                    name="imagen"
                                     onChange={handleImageChange}
                                     required
                             />
-                            <button type='submit'>
-                                Enviar
-                            </button>
+                            <button type='submit'>Enviar</button>
                         </form>
 
                     </div>
@@ -120,5 +119,4 @@ export default function ProductoForm(){
             </div>
         </>
     )
-
 }
