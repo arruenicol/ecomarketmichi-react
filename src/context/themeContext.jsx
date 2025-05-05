@@ -21,7 +21,7 @@ export function ThemeProvider({ children }) {
     colors: {
       background: darkMode ? "#1a1a1a" : "#ffffff", // Fondo oscuro o claro
       text: darkMode ? "#D3D3D3" : "#333333", // Texto claro u oscuro
-      primary: darkMode ? "#4CAF50" : "#28a745", // Color primario (verde oscuro o claro)
+      primary: darkMode ? "#01A49E" : "#01A49E", // Color primario (verde oscuro o claro)
       cardBackground: darkMode ? "#2d2d2d" : "#f8f9fa", // Fondo de tarjetas
     },
   };

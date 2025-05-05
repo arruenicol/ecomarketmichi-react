@@ -1,23 +1,17 @@
 import React from "react";
-import GridProducto from "../components/Producto/GridProducto";
 import { useTheme } from "../context/themeContext";
-import { useParams } from "react-router-dom";
-import { minHeight } from "@mui/system";
 
 
-export default function Tienda() {
+export default function EnProceso() {
     const { colors } = useTheme();
-    const { categoria } = useParams();
-
 
     return (
         <>  
         <section
             style={{
-                backgroundColor: colors.cardBackground,
+                backgroundColor: colors.background,
                 minHeight: "80vh",
                 display: "flex",
-                flexDirection: "column"
             }}>
 
                 <div
@@ -34,11 +28,10 @@ export default function Tienda() {
                             textAlign: "center",
                             marginBottom: "2rem"
                         }}
-                    >Productos Destacados</h1>
-                    <GridProducto categoria={categoria}/>
+                    >En proceso....</h1>
+
                 </div>
         </section>
-            
         </>
     )
 }

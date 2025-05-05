@@ -19,7 +19,7 @@ export const productoService = {
 
             return response.data.filter(
                 (producto) =>
-                    producto.categoriaDTO && producto.categoriaDTO.nombreDTO === categoria
+                    producto.categoriaDTO && String( producto.categoriaDTO.idCategoriaDTO) === categoria
             );
             
         } catch (error) {
@@ -33,25 +33,29 @@ export const productoService = {
         try {
             const formData = new FormData();
             const productoDTO = {
-                nombre: datosProducto.nombre,
-                precio: datosProducto.precio,
-                categoria: datosProducto.categoria,
-                cantidad: datosProducto.cantidad,
-            }
+                nombreProductoDTO: datosProducto.nombreProductoDTO,
+                precioDTO: datosProducto.precioDTO,
+                descripcionDTO: datosProducto.descripcionDTO,
+                categoriaDTO: {idCategoriaDTO: datosProducto.categoriaDTO},
+                cantidadDTO: datosProducto.cantidadDTO,
+                empresaDTO: {idEmpresa: datosProducto.empresaDTO},
+                imagen: datosProducto.imagen
+            };
+            
     
 
             const productoBlob = new Blob([JSON.stringify(productoDTO)],
-                {type: "aplication/data"}
+                {type: "application/json"}
             )
 
-            datosForm.append("imagen", imagen)
-            datosForm.append("producto", productoBlob)
+            formData.append("imagen", imagen)
+            formData.append("producto", productoBlob)
 
-            const response = await api.post("productos/nuevo", datosForm,
-                headers = {
-                    "content-type": "multipart/form-data",
+            const response = await api.post("productos/nuevo", formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
                 }
-            )
+            });
 
             return response.data
 

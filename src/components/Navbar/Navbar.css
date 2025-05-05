@@ -1,4 +1,7 @@
 /* Estilos generales de la Navbar */
+*{
+  font-family: 'Roboto';
+}
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -15,6 +18,7 @@
   /* Estilos para el logo */
   .nav-logo img {
     height: 40px;
+    margin-right: 0px;
     transition: transform 0.3s ease;
   }
   
@@ -27,7 +31,7 @@
     display: flex;
     list-style: none;
     gap: 2rem;
-    margin-left: 5.5rem;
+    margin-left: 1rem;
     padding: 0;
   }
   
@@ -40,7 +44,7 @@
   }
   
   .nav-menu li:hover {
-    color: #28a745;
+    color: #01A49E;
   }
   
   .nav-menu li::after {
@@ -50,13 +54,59 @@
     height: 2px;
     bottom: -4px;
     left: 0;
-    background-color: #28a745;
+    background-color: #01A49E;
     transition: width 0.3s ease;
   }
   
   .nav-menu li:hover::after {
     width: 100%;
   }
+
+   
+/* Match select to nav menu items */
+.nav-select {
+  font-family: 'Roboto';
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  color: #01A49E;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='%2301A49E' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+
+/* Add underline hover like other nav items */
+.nav-select:hover {
+  color: #01A49E;
+}
+
+.nav-select:focus {
+  outline: none;
+}
+
+/* Optional: mimic the underline effect */
+.nav-select::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 0%;
+  background-color: #01A49E;
+  transition: width 0.3s ease;
+  margin-top: 2px;
+  padding-right: 2rem;
+}
+
+.nav-select:hover::after {
+  width: 100%;
+}
+
+
+
+
   
   /* Estilos para el área de login/carrito */
   .nav-login-cart {
@@ -66,18 +116,19 @@
   }
   
   .nav-login-cart button {
-    padding: 0.5rem 1.5rem;
-    border: 1px solid #28a745;
-    background-color: transparent;
-    color: #28a745;
-    border-radius: 4px;
-    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border: 1px solid #01A49E;
+    background-color: #01A49E;
+    color: white;
+    border-radius: 7px;
+    font-weight: bolder;
+    font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
   }
   
   .nav-login-cart button:hover {
-    background-color: #28a745;
+    background-color: #107975;
     color: white;
   }
   
@@ -93,8 +144,10 @@
   
   /* Estilos responsivos para tablets */
   @media (max-width: 768px) {
+
     .navbar {
       padding: 1rem;
+      flex-direction: flex;
     }
   
     .nav-menu {
@@ -108,17 +161,14 @@
   
   /* Estilos responsivos para móviles */
   @media (max-width: 576px) {
+    
     .navbar {
       flex-direction: column;
       padding: 1rem;
-      gap: 1rem;
-    }
-  
-    .nav-menu {
-      flex-direction: column;
-      align-items: center;
       gap: 0.5rem;
     }
+  
+    
   
     .nav-menu li::after {
       bottom: -2px;

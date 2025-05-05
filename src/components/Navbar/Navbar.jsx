@@ -1,77 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import cart from "../../assets/cart.svg";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
-
-// Importamos el hook useTheme desde nuestro contexto de tema personalizado
 import { useTheme } from "../../context/themeContext";
+import { categoriaService } from "../../service/CategoriaService";
 
 export default function Navbar() {
-  // Extraemos los valores del contexto de tema:
-  // - darkMode: boolean que indica si el modo oscuro está activo
-  // - toggleTheme: función para alternar entre temas
-  // - colors: objeto con los colores del tema actual
   const { darkMode, toggleTheme, colors } = useTheme();
+  const [categorias, setCategorias] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchCategorias = async () => {
+      try {
+        const data = await categoriaService.getAll();
+        setCategorias(data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategorias();
+  }, []);
+
+  const handleSelect = (e) => {
+    const categoriaId = e.target.value;
+    if (categoriaId) {
+      navigate(`/tienda/${categoriaId}`);
+      console.log(typeof categoriaId)
+    }
+  };
 
   return (
-    <div
-      className="navbar"
+    <div className="navbar"
       style={{
-        // Color de fondo según el tema
         backgroundColor: colors.background,
-        // Sombra diferente para modo oscuro/claro
         boxShadow: darkMode
           ? "0 2px 4px rgba(0, 0, 0, 0.3)"
           : "0 2px 4px rgba(0, 0, 0, 0.1)",
       }}
     >
-      {/* Logo */}
-      <div className="nav-logo">
-        <img src={logo} alt="logo" />
-      </div>
+        <div className="nav-logo">
+          <img src={logo} alt="logo" />
+        </div>
 
-      {/* Menú de navegación con color de texto dinámico */}
       <ul className="nav-menu">
-        <Link
-          to={"/tienda"}
-          style={{ color:colors.text, textDecoration:"none"}}
-        >
-          <li style={{ color: colors.text }}>Tienda</li>
+        <Link to="/tienda" style={{ color: colors.text, textDecoration: "none" }}>
+          <li style={{ color: colors.text }}>Inicio</li>
         </Link>
-        <Link
-          to={"/ropa"}
-          style={{ color:colors.text, textDecoration:"none"}}
-        >
-          <li style={{ color: colors.text }}>Ropa</li>
+
+        <Link to="/proceso" style={{ color: colors.text, textDecoration: "none" }}>
+          <li style={{ color: colors.text }}>Ayuda</li>
         </Link>
-        <Link
-          to={"/hogar"}
-          style={{ color:colors.text, textDecoration:"none"}}
-        >
-          <li style={{ color: colors.text }}>Hogar</li>
-        </Link>
-        <Link
-         to={"/comida"}
-          style={{ color:colors.text, textDecoration:"none"}}
-         >
-          <li style={{ color: colors.text }}>Comida</li>
-        </Link>
-        
+
+        {/* Dropdown */}
+        <select className="nav-select" onChange={handleSelect} style={{ backgroundColor: colors.background, color: colors.text }}>
+          <option value="">Categorías</option>
+          {categorias.map((cat) => (
+            <option key={cat.idCategoriaDTO} value={cat.idCategoriaDTO}>
+              {cat.nombreDTO.charAt(0).toUpperCase() + cat.nombreDTO.slice(1)}            </option>
+          ))}
+        </select>
+
+
       </ul>
 
-      {/* Contenedor de login/carrito/tema */}
       <div className="nav-login-cart">
-        <button
-          style={{
-            borderColor: colors.primary
-          }}
-        >
-          Login
-        </button>
-        <img src={cart} alt="carrito" />
-
-        {/* Botón para alternar entre temas */}
+        <button style={{ borderColor: colors.primary }}>Log In</button>
         <button
           onClick={toggleTheme}
           style={{
@@ -80,13 +76,10 @@ export default function Navbar() {
             background: "transparent",
             border: "none",
             cursor: "pointer",
-            color: colors.text, // Color de texto según el tema
+            color: colors.text,
           }}
-          aria-label={
-            darkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"
-          }
         >
-          {darkMode ? "☀️" : "🌙"} {/* Icono solar o lunar según el tema */}
+          {darkMode ? "☀️" : "🌙"}
         </button>
       </div>
     </div>

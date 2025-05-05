@@ -14,26 +14,27 @@ export default function GridProducto({ categoria }) {
     const [error, setError] = useState(null);
 
     // CATEGORIAS DISPONIBLES
-    const categorias = {ropa: "ropa", hogar: "hogar", comida: "comida"};
-
-    // VERIFICACIÓN Y SETEO DE CATEGORÍA 
     useEffect(() => {
-        const fetchProducts = async() => {
-            try {
-                //Verificamos que traiga una categoría al momento de buscar con axios
-                if(!categorias[categoria]) 
-                    throw new Error('Categoría inválida')
-                    const data = await productoService.getByCategory(categorias[categoria]);
-                    setProductos(data);
-            } catch (error) {
-                setError(error);
-                console.log(error);
-            } finally {
-                setCargando(false);
+        const fetchProducts = async () => {
+          try {
+            let data;
+            if (categoria) {
+              data = await productoService.getByCategory(categoria);
+            } else {
+              data = await productoService.getAll();
             }
+            setProductos(data);
+          } catch (error) {
+            setError(error);
+            console.error(error);
+          } finally {
+            setCargando(false);
+          }
         };
+      
         fetchProducts();
-    }, [categoria]);
+      }, [categoria]);
+      
 
 
     // MENSAJE DE CARGA AL CAMBIAR CATEGORÍA
@@ -45,7 +46,7 @@ export default function GridProducto({ categoria }) {
     return (
         <>
         <div style={{ 
-        display: "grid", 
+        display: "grid",
         gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", 
         gap: "2rem" 
         }}>

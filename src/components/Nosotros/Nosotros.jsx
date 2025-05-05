@@ -1,79 +1,110 @@
-// Importamos React y los recursos necesarios
 import React from "react";
-import "./Nosotros.css";
-import { useTheme } from "../../context/themeContext"; // Importamos nuestro hook de tema personalizado
+import { useTheme } from "../../context/themeContext";
+import nico from "../../assets/photos/nico.jpg";
+import moises from "../../assets/photos/moises.jpg";
+import fran from "../../assets/photos/fran.jpg";
+import wood from "../../assets/photos/wood.jpg";
 
-//Datos del equipo//
 const teamMembers = [
   {
     id: 1,
-    name: "Juan Pérez",
-    role: "Desarrollador Frontend",
-    photo:
-      "https://imgs.search.brave.com/NbFnxYeaKE9R9Yl2M82NmoTCfuh4vrhcVor9XtRBimE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pMS53/cC5jb20vd3d3LnNo/dXR0ZXJzdG9jay5j/b20vYmxvZy93cC1j/b250ZW50L3VwbG9h/ZHMvc2l0ZXMvNS8y/MDI0LzA2L3Byb2Zp/bGVfcGhvdG9fc2Ft/cGxlXzcuanBnP3Nz/bD0x",
-  },
+    name: "Francisca Flores",
+    role: "Diseñadora UI/UX",
+    photo: fran},
   {
     id: 2,
-    name: "María García",
-    role: "Desarrolladora Backend",
-    photo:
-      "https://imgs.search.brave.com/H7qHXnpx5HCLKMnuXzhCFv9T7kvcK9UCfjIRbcDu3j0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zaG90/a2l0LmNvbS93cC1j/b250ZW50L3VwbG9h/ZHMvYmItcGx1Z2lu/L2NhY2hlL2Nvb2wt/cHJvZmlsZS1waWMt/bWF0aGV1cy1mZXJy/ZXJvLWxhbmRzY2Fw/ZS02Y2JlZWEwN2Nl/ODcwZmM1M2JlZGQ5/NDkwOTk0MWE0Yi16/eWJyYXZneDJxNDcu/anBlZw",
+    name: "Moisés Palacios",
+    role: "Desarrollador Frontend",
+    photo: moises,
   },
   {
     id: 3,
-    name: "Carlos López",
-    role: "Diseñador UI/UX",
-    photo:
-      "https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  },
+    name: "Nicole Arrué",
+    role: "Desarrolladora Backend, Product Owner",
+    photo: nico},
+  {
+    id: 3,
+    name: "Woodleine Formetus",
+    role: "Scrum Master",
+    photo: wood},
 ];
 
-//Componente Nosotros - Muestra información sobre el equipo, usa el tema personalizado para estilos dinámicos (modo oscuro/claro)
 export default function Nosotros() {
-  // Extraemos los valores del contexto del tema
-  const { colors } = useTheme(); // darkMode y toggleTheme no se usan aquí pero están disponibles
+  const { colors } = useTheme();
 
   return (
-    // Sección principal con estilos dinámicos según el tema
     <section
-      className="team-section"
       style={{
-        backgroundColor: colors.cardBackground, // Fondo dinámico
-        color: colors.text, // Color de texto dinámico
+        backgroundColor: colors.cardBackground,
+        color: colors.text,
+        padding: "2rem",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
-      {/* Título con color primario del tema */}
-      <h2 style={{ color: colors.primary }}>Nuestro Equipo</h2>
+      <h2
+        style={{
+          color: colors.primary,
+          fontSize: "2rem",
+          marginBottom: "2rem",
+        }}
+      >
+        Nuestro Equipo
+      </h2>
 
-      {/* Contenedor grid para las tarjetas de equipo */}
-      <div className="team-grid">
-        {/* Mapeamos cada miembro del equipo a un componente */}
+        <div
+          style={{
+            display: "grid",
+            gap: "2rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+            width: "100%",
+            maxWidth: "800px",
+          }}
+        >
+
         {teamMembers.map((member) => (
           <div
-            key={member.id} // Key único
-            className="team-member"
-            style={{ color: colors.text }}
+            key={member.id}
+            style={{
+              backgroundColor: colors.background,
+              borderRadius: "1rem",
+              padding: "1.5rem",
+              boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+              textAlign: "center",
+              transition: "transform 0.3s ease",
+            }}
           >
-            {/* Contenedor de la foto con borde del color primario */}
             <div
-              className="member-photo"
-              style={{ borderColor: colors.primary }} // Borde dinámico
+              style={{
+                borderRadius: "50%",
+                overflow: "hidden",
+                border: `3px solid ${colors.primary}`,
+                width: "120px",
+                height: "120px",
+                margin: "0 auto 1rem",
+              }}
             >
               <img
                 src={member.photo}
                 alt={member.name}
-                loading="lazy" // Carga diferida para mejor performance
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+                loading="lazy"
               />
             </div>
-
-            {/* Nombre del miembro */}
-            <h3 style={{ color: colors.text }}>{member.name}</h3>
-
-            {/* Rol/Puesto */}
-            <p>{member.role}</p>
+            <h3 style={{ margin: "0.5rem 0", fontSize: "1.2rem", color: "#01A49E" }}>
+              {member.name}
+            </h3>
+            <p style={{ color: colors.textSecondary }}>{member.role}</p>
           </div>
         ))}
       </div>
     </section>
   );
 }
+

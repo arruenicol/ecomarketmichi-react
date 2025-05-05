@@ -100,7 +100,7 @@ export default function Footer() {
             textAlign: { xs: "center", sm: "center" }, // Centrado en móvil, derecha en desktop
           }}
         >
-          &copy; {new Date().getFullYear()} Mi Tienda Online
+          &copy; {new Date().getFullYear()} <b>ECO Market</b> by MichiLatte
         </Typography>
       </Box>
     </Box>

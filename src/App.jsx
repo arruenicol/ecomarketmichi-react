@@ -10,6 +10,7 @@ import Hogar from './pages/Hogar'
 import Comida from './pages/Comida'
 import Nosotros from './components/Nosotros/Nosotros'
 import ProductoForm from './components/Producto/ProductoForm'
+import EnProceso from './pages/EnProceso'
 
 function App() {
 
@@ -20,9 +21,8 @@ function App() {
           <Navbar />
             <Routes>
                 <Route path='/tienda' element={<Tienda />}></Route>
-                <Route path='/ropa' element={<Ropa />}></Route>
-                <Route path='/hogar' element={<Hogar />}></Route>
-                <Route path='/comida' element={<Comida />}></Route>
+                <Route path="/tienda/:categoria" element={<Tienda />} />
+                <Route path='/proceso' element={<EnProceso />}></Route>
                 <Route path='/nosotros' element={<Nosotros />}></Route>
                 <Route path='/agregarProducto' element={<ProductoForm />}></Route>
             </Routes>
