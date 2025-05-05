@@ -20,6 +20,7 @@ function App() {
         <div className="App">
           <Navbar />
             <Routes>
+                <Route path='/' element={<Tienda />}></Route>
                 <Route path='/tienda' element={<Tienda />}></Route>
                 <Route path="/tienda/:categoria" element={<Tienda />} />
                 <Route path='/proceso' element={<EnProceso />}></Route>
